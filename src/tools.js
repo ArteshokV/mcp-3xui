@@ -130,7 +130,7 @@ export function buildTools(panel) {
       inputSchema: { type: "object", required: ["email"], properties: { email: { type: "string" } } },
       run: async ({ email }) => {
         const [settings, client] = await Promise.all([
-          panel.get("/panel/api/setting/all"),
+          panel.post("/panel/api/setting/all"),
           panel.get(`/panel/api/clients/get/${encodeURIComponent(email)}`),
         ]);
         const s = settings?.obj || settings || {};
