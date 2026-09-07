@@ -83,7 +83,7 @@ export function buildTools(panel) {
     },
     {
       name: "update_client",
-      description: "Change a client's limits, expiry or enabled state. Only the fields passed are modified. To change which inbounds it uses, call attach_clients or detach_clients.",
+      description: "Change a client's limits, expiry, group or enabled state. The panel replaces the whole client row rather than patching it, so this tool reads the client first and merges your changes over the current values. To change which inbounds it uses, call attach_clients or detach_clients.",
       inputSchema: {
         type: "object",
         required: ["email"],
@@ -96,9 +96,28 @@ export function buildTools(panel) {
           tgId: { type: "integer" },
           enable: { type: "boolean" },
           comment: { type: "string" },
+          group: { type: "string" },
         },
       },
-      run: async ({ email, ...fields }) => ok(await panel.post(`/panel/api/clients/update/${encodeURIComponent(email)}`, { email, ...fields })),
+      run: async ({ email, ...fields }) => {
+        // The panel REPLACES the client row on update, so send the current
+        // values for everything the caller did not explicitly change.
+        const current = await panel.get(`/panel/api/clients/get/${encodeURIComponent(email)}`);
+        const c = current?.obj?.client || current?.obj || {};
+        const merged = {
+          email,
+          group: c.group ?? "",
+          comment: c.comment ?? "",
+          totalGB: c.totalGB ?? 0,
+          expiryTime: c.expiryTime ?? 0,
+          limitIp: c.limitIp ?? 0,
+          limitHwid: c.limitHwid ?? 0,
+          tgId: c.tgId ?? 0,
+          enable: c.enable ?? true,
+          ...fields,
+        };
+        return ok(await panel.post(`/panel/api/clients/update/${encodeURIComponent(email)}`, merged));
+      },
     },
     {
       name: "delete_client",
