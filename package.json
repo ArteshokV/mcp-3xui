@@ -1,6 +1,6 @@
 {
   "name": "mcp-3xui",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "MCP server for the 3x-ui panel API: clients, inbounds, groups, subscriptions, and generic access to every endpoint.",
   "license": "MIT",
   "type": "module",

@@ -108,6 +108,8 @@ export function buildTools(panel) {
           email,
           group: c.group ?? "",
           comment: c.comment ?? "",
+          flow: c.flow ?? "",
+          security: c.security ?? "auto",
           totalGB: c.totalGB ?? 0,
           expiryTime: c.expiryTime ?? 0,
           limitIp: c.limitIp ?? 0,
