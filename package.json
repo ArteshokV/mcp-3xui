@@ -1,0 +1,15 @@
+{
+  "name": "mcp-3xui",
+  "version": "0.1.0",
+  "description": "MCP server for the 3x-ui panel API: clients, inbounds, groups, subscriptions, and generic access to every endpoint.",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "mcp-3xui": "src/index.js" },
+  "files": ["src", "README.md", "LICENSE"],
+  "engines": { "node": ">=18" },
+  "repository": { "type": "git", "url": "git+https://github.com/ArteshokV/mcp-3xui.git" },
+  "keywords": ["mcp", "model-context-protocol", "3x-ui", "x-ui", "xray", "vless", "vpn"],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}
